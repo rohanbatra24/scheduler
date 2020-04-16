@@ -72,8 +72,6 @@ export default function Application(props) {
     return <Appointment key={appointment.id} {...appointment} />;
   });
 
-  console.log(appointmentList);
-
   return (
     <main className="layout">
       <section className="sidebar">
