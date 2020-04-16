@@ -1,5 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
+import getAppointmentsForDay from '/Users/rohanbatra/hostLighthouse/scheduler/src/helpers/selectors.js';
+
 import axios from 'axios';
 
 import 'components/Application.scss';
@@ -9,53 +11,6 @@ import 'components/Application';
 import DayList from './DayList';
 
 import Appointment from 'components/Appointment/index';
-
-const appointments = [
-  {
-    id: 1,
-    time: '12pm'
-  },
-  {
-    id: 2,
-    time: '1pm',
-    interview: {
-      student: 'Lydia Miller-Jones',
-      interviewer: {
-        id: 1,
-        name: 'Sylvia Palmer',
-        avatar: 'https://i.imgur.com/LpaY82x.png'
-      }
-    }
-  },
-  {
-    id: 3,
-    time: '2pm',
-    interview: {
-      student: 'Mike',
-      interviewer: {
-        id: 3,
-        name: 'James',
-        avatar: 'https://i.imgur.com/LpaY82x.png'
-      }
-    }
-  },
-  {
-    id: 4,
-    time: '3pm'
-  },
-  {
-    id: 5,
-    time: '4pm',
-    interview: {
-      student: 'Miller',
-      interviewer: {
-        id: 5,
-        name: 'Tom',
-        avatar: 'https://i.imgur.com/LpaY82x.png'
-      }
-    }
-  }
-];
 
 export default function Application(props) {
   const [ state, setState ] = useState({
@@ -69,10 +24,17 @@ export default function Application(props) {
   const setDays = (days) => setState({ ...state, days });
 
   useEffect(() => {
-    axios.get(`/api/days`).then((response) => {
-      setDays(response.data);
+    Promise.all([
+      Promise.resolve(axios.get(`/api/days`)),
+      Promise.resolve(axios.get(`/api/appointments`))
+    ]).then((all) => {
+      setState((prev) => ({ days: all[0].data, appointments: all[1].data }));
     });
   }, []);
+
+  const appointments = getAppointmentsForDay(state, state.day);
+
+  console.log('Appoitments=====', appointments);
 
   const appointmentList = appointments.map((appointment) => {
     return <Appointment key={appointment.id} {...appointment} />;
