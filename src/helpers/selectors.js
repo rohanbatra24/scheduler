@@ -20,6 +20,8 @@ function getAppointmentsForDay(state, day) {
   return aptsForDay;
 }
 
+// console.log(getAppointmentsForDay(state, 'Monday'));
+
 function getInterview(state, interview) {
   for (let key in state.appointments) {
     if (state.appointments[key].interview === null || interview === null) {
@@ -42,4 +44,28 @@ function getInterview(state, interview) {
   return null;
 }
 
-module.exports = { getAppointmentsForDay, getInterview };
+function getInterviewersForDay(state, day) {
+  const filteredInterviewers = state.days.filter((d) => d.name === day);
+
+  // console.log('fitlererdInts', filteredInterviewers[0].interviewers);
+
+  const interviewersForDay = [];
+
+  if (state.days.length === 0) {
+    return [];
+  }
+
+  if (!filteredInterviewers[0]) {
+    return [];
+  }
+
+  for (const interviewerID of filteredInterviewers[0].interviewers) {
+    if (state.interviewers[interviewerID].id === interviewerID) {
+      interviewersForDay.push(state.interviewers[interviewerID]);
+    }
+  }
+
+  return interviewersForDay;
+}
+
+module.exports = { getAppointmentsForDay, getInterview, getInterviewersForDay };
