@@ -41,7 +41,7 @@ export default function Appointment(props) {
     return (
       <article className="appointment">
         <Header time={props.time} />
-        <Form interviewers={props.interviewers} />
+        <Form onCancel={back} interviewers={props.interviewers} />
       </article>
     );
   }
