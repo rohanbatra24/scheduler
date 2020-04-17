@@ -7,8 +7,13 @@ import Show from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appo
 
 import Empty from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Empty';
 
+import useVisualMode from '/Users/rohanbatra/hostLighthouse/scheduler/src/hooks/useVisualMode.js';
+
+const EMPTY = 'EMPTY';
+const SHOW = 'SHOW';
+
 export default function Appointment(props) {
-  console.log('appt props=====', props);
+  const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
 
   if (props.interview) {
     return (
