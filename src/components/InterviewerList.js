@@ -5,7 +5,7 @@ import 'components/InterviewerList.scss';
 import InterviewerListItem from '../components/InterviewerListItem';
 // InterviewerList({ interviewers: [], setInterviewer: () => null })
 export default function InterviewerList(props) {
-  console.log('IL props', props);
+  // console.log('IL props', props);
 
   const interviewers =
     props.interviewers && // is this correct?
