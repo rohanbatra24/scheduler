@@ -14,6 +14,8 @@ import Appointment from 'components/Appointment/index';
 
 const { getAppointmentsForDay } = require('/Users/rohanbatra/hostLighthouse/scheduler/src/helpers/selectors');
 
+const { getInterviewersForDay } = require('/Users/rohanbatra/hostLighthouse/scheduler/src/helpers/selectors');
+
 export default function Application(props) {
   const [ state, setState ] = useState({
     day: 'Monday',
@@ -35,9 +37,12 @@ export default function Application(props) {
   }, []);
 
   const appointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
+
+  console.log('interviewers=====', interviewers);
 
   const appointmentList = appointments.map((appointment) => {
-    return <Appointment key={appointment.id} {...appointment} />;
+    return <Appointment key={appointment.id} {...appointment} interviewers={interviewers} />;
   });
 
   return (
