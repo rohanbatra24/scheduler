@@ -9,24 +9,44 @@ import Empty from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/App
 
 import Form from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Form';
 
+import Status from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Status';
+
 import useVisualMode from '/Users/rohanbatra/hostLighthouse/scheduler/src/hooks/useVisualMode.js';
 
 const EMPTY = 'EMPTY';
 const SHOW = 'SHOW';
 const CREATE = 'CREATE';
+const SAVING = 'SAVING';
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
 
-  // console.log('===', history);
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
 
-  // console.log(mode);
+    transition(SAVING);
+
+    props.bookInterview(props.id, interview).then(() => transition(SHOW)); // getting id as prop from application
+  }
+
+  function cancelInterview() {
+    transition(SAVING);
+
+    props.cancelInterview(props.id).then(() => transition(EMPTY)); // getting id as prop from application
+  }
 
   if (mode === SHOW) {
     return (
       <article className="appointment">
         <Header time={props.time} />
-        <Show student={props.interview.student} interviewer={props.interview.interviewer.name} />
+        <Show
+          student={props.interview.student}
+          interviewer={props.interviewer.name}
+          cancelInterview={cancelInterview}
+        />
       </article>
     );
   } else if (mode === EMPTY) {
@@ -41,7 +61,16 @@ export default function Appointment(props) {
     return (
       <article className="appointment">
         <Header time={props.time} />
-        <Form onCancel={back} interviewers={props.interviewers} />
+        <Form onSave={save} onCancel={back} interviewers={props.interviewers} appointmentID={props.id} />
+      </article>
+    );
+  }
+
+  if (mode === SAVING) {
+    return (
+      <article className="appointment">
+        <Header time={props.time} />
+        <Status message={props.message} />
       </article>
     );
   }

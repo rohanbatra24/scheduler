@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Header(props) {
-  // console.log('====', props);
+  console.log('show props====', props);
 
   return (
     <main className="appointment__card appointment__card--show">
@@ -15,7 +15,12 @@ export default function Header(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <img className="appointment__actions-button" src="images/edit.png" alt="Edit" onClick={props.onEdit} />
-          <img className="appointment__actions-button" src="images/trash.png" alt="Delete" onClick={props.onDelete} />
+          <img
+            className="appointment__actions-button"
+            src="images/trash.png"
+            alt="Delete"
+            onClick={props.cancelInterview}
+          />
         </section>
       </section>
     </main>
