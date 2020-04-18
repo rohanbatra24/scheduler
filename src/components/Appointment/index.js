@@ -11,12 +11,15 @@ import Form from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appo
 
 import Status from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Status';
 
+import Confirm from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Confirm';
+
 import useVisualMode from '/Users/rohanbatra/hostLighthouse/scheduler/src/hooks/useVisualMode.js';
 
 const EMPTY = 'EMPTY';
 const SHOW = 'SHOW';
 const CREATE = 'CREATE';
 const SAVING = 'SAVING';
+const CONFIRM = 'CONFIRM';
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
@@ -32,6 +35,14 @@ export default function Appointment(props) {
     props.bookInterview(props.id, interview).then(() => transition(SHOW)); // getting id as prop from application
   }
 
+  function confirmCancel() {
+    transition(CONFIRM);
+  }
+
+  function cancelCancel() {
+    back();
+  }
+
   function cancelInterview() {
     transition(SAVING);
 
@@ -42,11 +53,7 @@ export default function Appointment(props) {
     return (
       <article className="appointment">
         <Header time={props.time} />
-        <Show
-          student={props.interview.student}
-          interviewer={props.interviewer.name}
-          cancelInterview={cancelInterview}
-        />
+        <Show student={props.interview.student} interviewer={props.interviewer.name} confirmCancel={confirmCancel} />
       </article>
     );
   } else if (mode === EMPTY) {
@@ -71,6 +78,14 @@ export default function Appointment(props) {
       <article className="appointment">
         <Header time={props.time} />
         <Status message={props.message} />
+      </article>
+    );
+  }
+
+  if (mode === CONFIRM) {
+    return (
+      <article className="appointment">
+        <Confirm cancelInterview={cancelInterview} cancelCancel={cancelCancel} />
       </article>
     );
   }
