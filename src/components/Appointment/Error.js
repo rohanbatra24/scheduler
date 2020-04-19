@@ -9,7 +9,12 @@ export default function Header(props) {
         <h1 className="text--semi-bold">Error</h1>
         <h3 className="text--light">{props.message}</h3>
       </section>
-      <img onClick={props.onClose} className="appointment__error-close" src="images/close.png" alt="Close" />
+      <img
+        onClick={() => props.cancelError()}
+        className="appointment__error-close"
+        src="images/close.png"
+        alt="Close"
+      />
     </main>
   );
 }

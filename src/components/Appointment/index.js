@@ -13,16 +13,24 @@ import Status from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Ap
 
 import Confirm from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Confirm';
 
+import Error from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Error';
+
 import useVisualMode from '/Users/rohanbatra/hostLighthouse/scheduler/src/hooks/useVisualMode.js';
 
 const EMPTY = 'EMPTY';
 const SHOW = 'SHOW';
 const CREATE = 'CREATE';
 const SAVING = 'SAVING';
+const DELETING = 'DELETING';
 const CONFIRM = 'CONFIRM';
+const EDIT = 'EDIT';
+const ERROR_SAVE = 'ERROR';
+const ERROR_DELETE = 'ERROR_DELETE';
 
 export default function Appointment(props) {
-  const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
+  const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY); // mode not updating to empty on deleting appointment
+
+  // console.log('props.interview===', props.interview);
 
   function save(name, interviewer) {
     const interview = {
@@ -32,7 +40,18 @@ export default function Appointment(props) {
 
     transition(SAVING);
 
-    props.bookInterview(props.id, interview).then(() => transition(SHOW)); // getting id as prop from application
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch((error) => transition(ERROR_SAVE, true));
+  }
+
+  function cancelErrorSave() {
+    back();
+  }
+
+  function cancelDeleteError() {
+    back();
   }
 
   function confirmCancel() {
@@ -43,20 +62,32 @@ export default function Appointment(props) {
     back();
   }
 
-  function cancelInterview() {
-    transition(SAVING);
+  function edit() {
+    console.log(2);
+    transition(EDIT);
+  }
 
-    props.cancelInterview(props.id).then(() => transition(EMPTY)); // getting id as prop from application
+  function cancelInterview() {
+    transition(DELETING, true);
+
+    props.cancelInterview(props.id).then(() => transition(SHOW)).catch((error) => transition(ERROR_DELETE, true));
   }
 
   if (mode === SHOW) {
+    // console.log('in show');
     return (
       <article className="appointment">
         <Header time={props.time} />
-        <Show student={props.interview.student} interviewer={props.interviewer.name} confirmCancel={confirmCancel} />
+        <Show
+          student={props.interview.student}
+          interviewer={props.interviewer}
+          confirmCancel={confirmCancel}
+          edit={edit}
+        />
       </article>
     );
-  } else if (mode === EMPTY) {
+  }
+  if (mode === EMPTY) {
     return (
       <article className="appointment">
         <Header time={props.time} />
@@ -77,7 +108,16 @@ export default function Appointment(props) {
     return (
       <article className="appointment">
         <Header time={props.time} />
-        <Status message={props.message} />
+        <Status message={'Saving..'} />
+      </article>
+    );
+  }
+
+  if (mode === DELETING) {
+    return (
+      <article className="appointment">
+        <Header time={props.time} />
+        <Status message={'Deleting..'} />
       </article>
     );
   }
@@ -86,6 +126,32 @@ export default function Appointment(props) {
     return (
       <article className="appointment">
         <Confirm cancelInterview={cancelInterview} cancelCancel={cancelCancel} />
+      </article>
+    );
+  }
+
+  if (mode === EDIT) {
+    return (
+      <article className="appointment">
+        <Form onSave={save} onCancel={back} interviewers={props.interviewers} student={props.interview.student} />
+      </article>
+    );
+  }
+
+  if (mode === ERROR_SAVE) {
+    // console.log('in saveerror');
+    return (
+      <article className="appointment">
+        <Error message={'Error saving appointment'} cancelError={cancelErrorSave} />
+      </article>
+    );
+  }
+
+  if (mode === ERROR_DELETE) {
+    // console.log('in delete error');
+    return (
+      <article className="appointment">
+        <Error message={'Error deleting appointment'} cancelError={cancelDeleteError} />
       </article>
     );
   }

@@ -5,6 +5,8 @@ import 'components/DayListItem.scss';
 var classNames = require('classnames');
 
 export default function DayListItem(props) {
+  // console.log('daylistitem props', props);
+
   const dayClass = classNames('DayListItem', {
     'day-list__item': true,
     'day-list__item--selected': props.selected,

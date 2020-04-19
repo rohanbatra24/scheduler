@@ -1,8 +1,8 @@
-import React, { useState, Fragment, useEffect } from 'react';
+// issues to be resolved
+// - not able to delete appointments - request to db going through.. everything is fine on refresh. Seems to be problem with transition
+// - not defaulting to selected interviewer when editing appointment
 
-// import getAppointmentsForDay from '/Users/rohanbatra/hostLighthouse/scheduler/src/helpers/selectors.js';
-
-import axios from 'axios';
+import React, { Fragment } from 'react';
 
 import 'components/Application.scss';
 
@@ -12,97 +12,14 @@ import DayList from './DayList';
 
 import Appointment from 'components/Appointment/index';
 
-import useVisualMode from '/Users/rohanbatra/hostLighthouse/scheduler/src/hooks/useVisualMode.js';
+import useApplicationData from '../hooks/useApplicationData';
 
 const { getAppointmentsForDay } = require('/Users/rohanbatra/hostLighthouse/scheduler/src/helpers/selectors');
 
 const { getInterviewersForDay } = require('/Users/rohanbatra/hostLighthouse/scheduler/src/helpers/selectors');
 
-const EMPTY = 'EMPTY';
-const SHOW = 'SHOW';
-const CREATE = 'CREATE';
-
 export default function Application(props) {
-  const [ state, setState ] = useState({
-    day: 'Monday',
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
-
-  const setDay = (day) => setState({ ...state, day });
-
-  const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
-
-  useEffect(() => {
-    Promise.all([
-      Promise.resolve(axios.get(`/api/days`)),
-      Promise.resolve(axios.get(`/api/appointments`)),
-      Promise.resolve(axios.get(`/api/interviewers`))
-    ]).then((all) => {
-      setState((prev) => ({ days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
-    });
-  }, []);
-
-  function bookInterview(id, interview) {
-    console.log(id, interview);
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    const data = { interview };
-
-    return axios
-      .put(`/api/appointments/${id}`, data)
-      .then((response) => {
-        console.log(response);
-        setState({
-          ...state,
-          appointments
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function cancelInterview(id) {
-    console.log(id);
-
-    const interview = null;
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    const data = { interview };
-
-    return axios
-      .delete(`/api/appointments/${id}`, data)
-      .then((response) => {
-        console.log(response);
-        setState({
-          ...state,
-          appointments
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
 
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
