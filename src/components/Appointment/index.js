@@ -63,30 +63,41 @@ export default function Appointment(props) {
   }
 
   function edit() {
-    console.log(2);
     transition(EDIT);
   }
 
   function cancelInterview() {
     transition(DELETING, true);
 
-    props.cancelInterview(props.id).then(() => transition(SHOW)).catch((error) => transition(ERROR_DELETE, true));
+    props.cancelInterview(props.id).then(() => transition(EMPTY)).catch((error) => transition(ERROR_DELETE, true));
   }
 
+  let interviewerName = '';
+
+  console.log(props.interviewers);
+  console.log(props.interview);
+
   if (mode === SHOW) {
-    // console.log('in show');
+    for (let k of props.interviewers) {
+      if (props.interview.interviewer === k.id) {
+        interviewerName = k.name;
+      }
+    }
+    console.log('intname', interviewerName);
+
     return (
       <article className="appointment">
         <Header time={props.time} />
         <Show
           student={props.interview.student}
-          interviewer={props.interviewer}
+          interviewer={interviewerName}
           confirmCancel={confirmCancel}
           edit={edit}
         />
       </article>
     );
   }
+
   if (mode === EMPTY) {
     return (
       <article className="appointment">
@@ -133,7 +144,13 @@ export default function Appointment(props) {
   if (mode === EDIT) {
     return (
       <article className="appointment">
-        <Form onSave={save} onCancel={back} interviewers={props.interviewers} student={props.interview.student} />
+        <Form
+          onSave={save}
+          onCancel={back}
+          interviewers={props.interviewers}
+          interviewer={props.interview.interviewer}
+          student={props.interview.student}
+        />
       </article>
     );
   }

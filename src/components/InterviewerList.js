@@ -1,25 +1,25 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import 'components/InterviewerList.scss';
 
 import InterviewerListItem from '../components/InterviewerListItem';
 // InterviewerList({ interviewers: [], setInterviewer: () => null })
 export default function InterviewerList(props) {
-  // console.log('IL props', props);
+  console.log('IL props', props);
 
-  const interviewers =
-    props.interviewers && // is this correct?
-    props.interviewers.map((interviewer) => {
-      return (
-        <InterviewerListItem
-          selected={interviewer.id === props.interviewer}
-          avatar={interviewer.avatar}
-          key={interviewer.id}
-          name={interviewer.name}
-          setInterviewer={(event) => props.setInterviewer(interviewer.id)}
-        />
-      );
-    });
+  const interviewers = props.interviewers.map((interviewer) => {
+    return (
+      <InterviewerListItem
+        selected={interviewer.id === props.interviewer}
+        avatar={interviewer.avatar}
+        key={interviewer.id}
+        name={interviewer.name}
+        setInterviewer={(event) => props.setInterviewer(interviewer.id)}
+      />
+    );
+  });
 
   return (
     <section className="interviewers">

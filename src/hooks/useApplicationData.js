@@ -44,7 +44,6 @@ export default function useApplicationData() {
     const data = { interview };
 
     return axios.put(`/api/appointments/${id}`, data).then((response) => {
-      console.log('state before====', state);
       setState({
         ...state,
         days,
@@ -58,13 +57,20 @@ export default function useApplicationData() {
 
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: null
     };
 
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
+
+    // update spots remaining
+    for (let day in state.days) {
+      if (state.days[day].name === state.day) {
+        state.days[day].spots++;
+      }
+    }
 
     const data = { interview };
 

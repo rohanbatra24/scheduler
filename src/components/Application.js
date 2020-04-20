@@ -1,6 +1,6 @@
 // issues to be resolved
-// - not able to delete appointments - request to db going through.. everything is fine on refresh. Seems to be problem with transition
-// - not defaulting to selected interviewer when editing appointment
+
+// interview spots reducing even for appt edit - going into negative
 
 import React, { Fragment } from 'react';
 
@@ -31,7 +31,7 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={appointment.interview}
-        interviewer={appointment.interview && state.interviewers[appointment.interview.interviewer]}
+        interviewer={appointment.interview && appointment.interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
