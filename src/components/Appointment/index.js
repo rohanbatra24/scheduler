@@ -72,18 +72,13 @@ export default function Appointment(props) {
     props.cancelInterview(props.id).then(() => transition(EMPTY)).catch((error) => transition(ERROR_DELETE, true));
   }
 
-  let interviewerName = '';
-
-  console.log(props.interviewers);
-  console.log(props.interview);
-
   if (mode === SHOW) {
+    let interviewerName;
     for (let k of props.interviewers) {
       if (props.interview.interviewer === k.id) {
         interviewerName = k.name;
       }
     }
-    console.log('intname', interviewerName);
 
     return (
       <article className="appointment">
