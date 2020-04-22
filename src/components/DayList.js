@@ -4,7 +4,7 @@ import DayListItem from '../components/DayListItem';
 
 export default function DayList(props) {
   const days = props.days.map((day) => {
-    console.log('day=====', props.day);
+    // console.log('day=====', props.day);
 
     return (
       <DayListItem
