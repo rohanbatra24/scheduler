@@ -12,7 +12,7 @@ export default function Header(props) {
         <Button onClick={props.cancelCancel} danger>
           Cancel
         </Button>
-        <Button onClick={props.cancelInterview} danger>
+        <Button alt="Confirm" onClick={props.cancelInterview} danger>
           Confirm
         </Button>
       </section>
