@@ -5,10 +5,10 @@ A React application that allows users to book and cancel interviews.
 
 ## Final Product
 
-!["Screenshot of page on load"](https://github.com/rohanbatra24/tweeter/blob/master/docs/page_onload.png?raw=true)
-!["screenshot of input view"](https://github.com/rohanbatra24/tweeter/blob/master/docs/input_view.png?raw=true)
-!["screenshot of widescreen view"](https://github.com/rohanbatra24/tweeter/blob/master/docs/widescreen_view.png?raw=true)
-!["screenshot of Error"](https://github.com/rohanbatra24/tweeter/blob/master/docs/error_display.png?raw=true)
+!["Main page"](https://github.com/rohanbatra24/scheduler/blob/master/docs/Main%20page.png?raw=true)
+!["Create new appointment"](https://github.com/rohanbatra24/scheduler/blob/master/docs/Create%20new%20appointment.png?raw=true)
+!["Appointment on hover"](https://github.com/rohanbatra24/scheduler/blob/master/docs/Appointment%20on%20hover.png?raw=true)
+!["Delete confirmation"](https://github.com/rohanbatra24/scheduler/blob/master/docs/Delete%20confirmation.png?raw=true)
 
 
 
