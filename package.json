@@ -12,6 +12,7 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
+    "cypress": "cypress open -P .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -20,16 +21,8 @@
     "build-storybook": "build-storybook -s public"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "production": [ ">0.2%", "not dead", "not op_mini all" ],
+    "development": [ "last 1 chrome version", "last 1 firefox version", "last 1 safari version" ]
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -46,9 +39,6 @@
     "react-test-renderer": "^16.9.0"
   },
   "jest": {
-    "watchPathIgnorePatterns": [
-      "<rootDir>/node_modules/",
-      "<rootDir>/.git/"
-    ]
+    "watchPathIgnorePatterns": [ "<rootDir>/node_modules/", "<rootDir>/.git/" ]
   }
 }
