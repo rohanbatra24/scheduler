@@ -3,10 +3,8 @@ import React, { useState } from 'react';
 import Button from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Button';
 
 import InterviewerList from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/InterviewerList';
-/// Form({ interviewer: 2, name: 'Mike', interviewers: [], onSave: () => console.log('onSave'), onCancel: () => null})
-export default function Form(props) {
-  // console.log('====form props', props);
 
+export default function Form(props) {
   const [ name, setName ] = useState(props.student || '');
   const [ interviewer, setInterviewer ] = useState(props.interviewer || null);
   const [ error, setError ] = useState('');
@@ -22,17 +20,17 @@ export default function Form(props) {
   }
 
   function save() {
+    //show error if blank name submitted
     if (name === '') {
       setError('Student name cannot be blank');
       return;
     }
+    // clear error
     setError('');
     props.onSave(name, interviewer);
   }
 
   function handleNameInput(evt) {
-    // debugger
-    // console.log(evt.target.value);
     setName(evt.target.value);
   }
 

@@ -28,16 +28,16 @@ const ERROR_SAVE = 'ERROR';
 const ERROR_DELETE = 'ERROR_DELETE';
 
 export default function Appointment(props) {
-  const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY); // mode not updating to empty on deleting appointment
+  const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
 
-  // console.log('props.interview===', props.interview);
-
+  // creates new interview object
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
 
+    // show loading screen
     transition(SAVING);
 
     props
@@ -46,18 +46,22 @@ export default function Appointment(props) {
       .catch((error) => transition(ERROR_SAVE, true));
   }
 
+  // go back from error message
   function cancelErrorSave() {
     back();
   }
 
+  // go back from error message
   function cancelDeleteError() {
     back();
   }
 
+  // confirm deletion of an interview
   function confirmCancel() {
     transition(CONFIRM);
   }
 
+  // go back from confrim message of cancel interview
   function cancelCancel() {
     back();
   }
@@ -67,6 +71,7 @@ export default function Appointment(props) {
   }
 
   function cancelInterview() {
+    // transition to deleting and replace mode in history
     transition(DELETING, true);
 
     props.cancelInterview(props.id).then(() => transition(EMPTY)).catch((error) => transition(ERROR_DELETE, true));
@@ -74,6 +79,8 @@ export default function Appointment(props) {
 
   if (mode === SHOW) {
     let interviewerName;
+
+    // getting interviewer name from interview object with id
     for (let k of props.interviewers) {
       if (props.interview.interviewer === k.id) {
         interviewerName = k.name;

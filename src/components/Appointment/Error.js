@@ -1,8 +1,6 @@
 import React from 'react';
 
 export default function Header(props) {
-  // console.log(props);
-
   return (
     <main className="appointment__card appointment__card--error">
       <section className="appointment__error-message">

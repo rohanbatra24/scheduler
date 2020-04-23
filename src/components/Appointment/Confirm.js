@@ -3,8 +3,6 @@ import React from 'react';
 import Button from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Button';
 
 export default function Header(props) {
-  // console.log('====', props);
-
   return (
     <main className="appointment__card appointment__card--confirm">
       <h1 className="text--semi-bold">Are you sure you want to delete?</h1>

@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import 'components/InterviewerList.scss';
 
 import InterviewerListItem from '../components/InterviewerListItem';
-// InterviewerList({ interviewers: [], setInterviewer: () => null })
 
 InterviewerList.propTypes = {
   interviewer: PropTypes.number,
