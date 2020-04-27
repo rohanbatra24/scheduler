@@ -1,21 +1,21 @@
 import React from 'react';
 import 'components/Appointment/styles.scss';
 
-import Header from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Header';
+import Header from './Header';
 
-import Show from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Show';
+import Show from './Show';
 
-import Empty from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Empty';
+import Empty from './Empty';
 
-import Form from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Form';
+import Form from './Form';
 
-import Status from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Status';
+import Status from './Status';
 
-import Confirm from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Confirm';
+import Confirm from './Confirm';
 
-import Error from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Appointment/Error';
+import Error from './Error';
 
-import useVisualMode from '/Users/rohanbatra/hostLighthouse/scheduler/src/hooks/useVisualMode.js';
+import useVisualMode from '../../hooks/useVisualMode';
 
 const EMPTY = 'EMPTY';
 const SHOW = 'SHOW';

@@ -38,7 +38,6 @@ export default function useApplicationData() {
     // update spots remaining
     for (let day in state.days) {
       if (!state.appointments[id].interview && state.days[day].name === state.day) {
-        console.log('in if');
         state.days[day].spots--;
       }
     }

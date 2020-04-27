@@ -14,9 +14,9 @@ import Appointment from 'components/Appointment/index';
 
 import useApplicationData from '../hooks/useApplicationData';
 
-const { getAppointmentsForDay } = require('/Users/rohanbatra/hostLighthouse/scheduler/src/helpers/selectors');
+const { getAppointmentsForDay } = require('../../src/helpers/selectors');
 
-const { getInterviewersForDay } = require('/Users/rohanbatra/hostLighthouse/scheduler/src/helpers/selectors');
+const { getInterviewersForDay } = require('../../src/helpers/selectors');
 
 export default function Application(props) {
   const { state, setDay, bookInterview, cancelInterview } = useApplicationData();

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '/Users/rohanbatra/hostLighthouse/scheduler/src/components/Button';
+import Button from '../Button';
 
 export default function Header(props) {
   return (
